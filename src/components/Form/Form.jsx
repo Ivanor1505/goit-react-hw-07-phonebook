@@ -8,8 +8,8 @@ import {
   StyledErrorMessage,
 } from './Form.styled';
 import { useDispatch, useSelector } from 'react-redux';
-import { addContacts } from 'redux/contactsSlice';
-import { getContacts } from 'redux/selectors';
+import { addContact } from 'redux/operations';
+import { getAllContacts } from 'redux/selectors';
 
 const formSchema = Yup.object({
   name: Yup.string()
@@ -28,14 +28,14 @@ const formSchema = Yup.object({
 
 export const AddContactForm = () => {
   const dispatch = useDispatch();
-  const contacts = useSelector(getContacts);
+  const contacts = useSelector(getAllContacts);
 
-  const addContact = contact => {
+  const addNewContact = contact => {
     if (checkDuplicate(contact)) {
       alert('the contact already exists');
       return;
     }
-    dispatch(addContacts(contact));
+    dispatch(addContact(contact));
   };
 
   function checkDuplicate(contact) {
@@ -52,7 +52,7 @@ export const AddContactForm = () => {
       }}
       validationSchema={formSchema}
       onSubmit={(values, { resetForm }) => {
-        addContact(values);
+        addNewContact(values);
         resetForm();
       }}
     >

@@ -1,15 +1,15 @@
 import React from 'react';
 import { Contact } from 'components/Contact/Contact';
 import { useSelector } from 'react-redux';
-import { getContacts } from 'redux/selectors';
+import { getAllContacts } from 'redux/selectors';
 import { getFilter } from 'redux/selectors';
 import { List } from './ContactList.styled';
 
 export const ContactList = () => {
   const filter = useSelector(getFilter);
-  const contacts = useSelector(getContacts);
+  const contacts = useSelector(getAllContacts);
 
-  const filterByName = React.useMemo(() => {
+  const filterByName = () => {
     if (!filter) {
       return contacts;
     }
@@ -17,11 +17,11 @@ export const ContactList = () => {
     return contacts.filter(contact =>
       contact.name.toLowerCase().includes(filter.toLowerCase())
     );
-  }, [contacts, filter]);
+  };
 
   return (
     <List>
-      {filterByName.map(filtredContact => {
+      {filterByName().map(filtredContact => {
         return <Contact key={filtredContact.id} contact={filtredContact} />;
       })}
     </List>
