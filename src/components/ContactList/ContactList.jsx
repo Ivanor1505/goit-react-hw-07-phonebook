@@ -9,6 +9,8 @@ export const ContactList = () => {
   const filter = useSelector(getFilter);
   const contacts = useSelector(getAllContacts);
 
+  console.log('Всі контакти:', contacts);
+
   const filterByName = () => {
     if (!filter) {
       return contacts;
